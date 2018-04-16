@@ -2,22 +2,19 @@ import pyshark
 import argparse
 import time
 
-def parse_cap( filename):
-    print "Looking for Kerb  data from " + filename
+def  parse_packet(packet):
+     print packet 
 
+def parse_cap( filename):
+    print "File name is "+ filename
 
 
 
 def parse_interface(Interface):
     print "Starting Capture from interface " + Interface
-    capture = pyshark.LiveCapture(interface=Interface)
-    capture.sniff(timeout=10)
+    capture = pyshark.LiveCapture(interface=Interface, bpf_filter="Kerberos")
     
-
-    for packet in capture.sniff_continuously():
-        print packet
-
-
+    capture.apply_on_packets(parse_packet)
 
 
 
